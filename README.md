@@ -1,4 +1,4 @@
- fruit ninja inspired video game to be showcased at AUB Outdoors 2019
+## A fruit ninja inspired video game to be showcased at AUB Outdoors 2019
 The game consists of colorful shapes which appear on the screen. The player must destroy all shapes on the screen to achieve the highest possible score. Shapes can be categorized into 3 types:
 - **Regular Shapes:** These are solid, fixed colored squares or circles and make up the majority of the shapes that will appear. They explode on hit and grant the player 1 point.
 - **Chameleon Shapes:** These are squares or circles which change hue over time. They explode on hit and grant the player 2 points. Chameleon shapes are 50 times rarer than their regular counterparts.
