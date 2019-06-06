@@ -1,0 +1,7 @@
+#!/bin/bash
+
+/usr/bin/python3.6 ~/projects/Python/Outdoors/main.py --gunmode 0
+
+
+
+
