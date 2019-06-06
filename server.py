@@ -8,7 +8,6 @@ import config
 import time
 from threading import Thread
 import traceback
-import pyautogui
 import config as cfg
 
 
@@ -94,7 +93,6 @@ def _begin_mouse_control(cursor):
                 x, y = scale(frame, center)
                 # t1 = time.time()
                 cursor.center=np.array([window_width - x-250,window_height - y -150])
-                # pyautogui.moveTo(x, y)
                 # t2 = time.time()
             # cv2.imshow('Frame', frame)
             if cv2.waitKey(1) & 0xff == ord('q'):
@@ -104,36 +102,6 @@ def _begin_mouse_control(cursor):
     finally:
         stream.close()
 
-def mouse_control():
-    t = Thread(target=_mouse_control)
-    t.daemon = True
-    t.start()
-
-def _mouse_control():
-    config.send_ip()
-    pi = config.connect()
-    tx = []
-    ty = []
-    try:
-        while 1:
-            t1 = time.time()
-            center = config.receive_pos(pi)
-            t2 = time.time()
-            # print(center)
-            if center is not None:
-                center = (320 - center[0], center[1])
-                x, y = (center[0]*window_width/320, center[1]*window_height/240)
-                pyautogui.moveTo(x, y)
-            t3 = time.time()
-            tx.append(t3 - t2)
-            ty.append(t2 - t1)
-    except Exception as err:
-        traceback.print_tb(err.__traceback__)
-    finally:
-        pi.close()
-        print(np.mean(tx))
-        print(np.mean(ty))
-
 
 def adjust_gamma(image, gamma=1.0):
     table = np.array([((i / 255.0) ** gamma) * 255 for i in np.arange(0, 256)]).astype("uint8")
@@ -141,25 +109,7 @@ def adjust_gamma(image, gamma=1.0):
 
 
 def main():
-    config.send_ip()
-    stream = ThreadedStream(port=12345).start()
-    try:
-        frame = None
-        while frame is None:
-            center, frame, dimg = stream.get()
-        while 1:
-            center, frame, dimg = stream.get()
-            if center is not None:
-                frame = cv2.circle(frame, center, 10, (255,0,0), 3)
-                x, y = scale(frame, center)
-                pyautogui.moveTo(x, y)
-            cv2.imshow('Frame', frame)
-            if cv2.waitKey(1) & 0xff == ord('q'):
-                break
-    except Exception as err:
-         traceback.print_tb(err.__traceback__)
-    finally:
-        stream.stop()
+    pass
 
 def cursor_test():
     camera = WVS(src=0).start()
